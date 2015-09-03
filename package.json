@@ -1,6 +1,6 @@
 {
   "name": "mongo-express-query-params",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Express.js middleware implementing the API Query Spec, converting the query to something Mongo can lookup.",
   "main": "index.js",
   "scripts": {
