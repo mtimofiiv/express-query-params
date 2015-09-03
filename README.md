@@ -21,6 +21,8 @@ var app = express();
 app.use(queryParams());
 ```
 
+Inside any downstream middleware, this plugin will create a `parsedQuery` object on the `request`. See the [test](https://github.com/mtimofiiv/express-query-params/blob/master/test/test.js) to see how it works.
+
 ## Advanced Usage
 
 The middleware accepts a few options to make your life easier:
