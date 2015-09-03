@@ -3,31 +3,83 @@
 var httpMocks = require('node-mocks-http');
 var expect = require('chai').expect;
 
-var Module = require('../index')();
+var QParams = require('../index');
 
-describe('Module runs parsers', function() {
+var sampleRequest = {
+  method: 'GET',
+  url: '/',
+  query: {
+    username: 'steve',
+    email: '*@gmail.com*',
+    age: '18...25',
+    boughtSomethingOn: '2014-07-01...2014-09-01',
+    createdAt: '>2014-01-01',
+    updatedAt: '<2015-01-01',
+    friends: '>=5',
+    followers: '<=10'
+  }
+};
+
+describe('Module outputs properly parsed SQL', function() {
+  var Module = new QParams({ format: 'sql' });
   var request;
   var response;
 
   before(function(done) {
-    request = httpMocks.createRequest({
-      method: 'GET',
-      url: '/',
-      query: {
-        username: 'steve',
-        email: '*@gmail.com*',
-        age: '18...25',
-        boughtSomethingOn: '2014-07-01...2014-09-01',
-        createdAt: '>2014-01-01',
-        updatedAt: '<2015-01-01',
-        friends: '>=5',
-        followers: '<=10'
-      }
-    });
-
+    request = httpMocks.createRequest(sampleRequest);
     response = httpMocks.createResponse();
 
-    Module(request, response, function(req, res, next) {});
+    Module(request, response, function(request, response, next) {});
+
+    done();
+  });
+
+  it('parses exact string', function() {
+    expect(request.parsedQuery).to.contain('username = `steve`');
+  });
+
+  it('parses partial string', function() {
+    expect(request.parsedQuery).to.contain('email LIKE `%@gmail.com%`');
+  });
+
+  it('parses ranges with integers', function() {
+    expect(request.parsedQuery).to.contain('age >= 18');
+    expect(request.parsedQuery).to.contain('age <= 25');
+  });
+
+  it('parses ranges with dates', function() {
+    expect(request.parsedQuery).to.contain("boughtSomethingOn >= DATE('2014-07-01T00:00:00+02:00')");
+    expect(request.parsedQuery).to.contain("boughtSomethingOn <= DATE('2014-09-01T00:00:00+02:00')");
+  });
+
+  it('parses greater than', function() {
+    expect(request.parsedQuery).to.contain("createdAt > DATE('2014-01-01T00:00:00+01:00')");
+  });
+
+  it('parses lesser than', function() {
+    expect(request.parsedQuery).to.contain("updatedAt < DATE('2015-01-01T00:00:00+01:00')");
+  });
+
+  it('parses greater than or equal to', function() {
+    expect(request.parsedQuery).to.contain('friends >= 5');
+  });
+
+  it('parses lesser than or equal to', function() {
+    expect(request.parsedQuery).to.contain('followers <= 10');
+  });
+});
+
+describe('Module outputs a properly parsed Mongo query', function() {
+  var Module = new QParams({ format: 'mongodb' });
+  var request;
+  var response;
+
+  before(function(done) {
+    request = httpMocks.createRequest(sampleRequest);
+    response = httpMocks.createResponse();
+
+    Module(request, response, function(request, response, next) {});
+
     done();
   });
 
