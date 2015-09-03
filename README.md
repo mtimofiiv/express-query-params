@@ -2,6 +2,12 @@
 
 Express.js middleware implementing the [API Query Spec](http://mgmco.github.io/api-query-spec/), converting the query to something Mongo can lookup.
 
+## Installing
+
+```
+npm i --save mongo-express-query-params
+```
+
 ## Basic Usage
 
 This middleware can just be plugged into your stack like so:

@@ -3,7 +3,6 @@
 var httpMocks = require('node-mocks-http');
 var expect = require('chai').expect;
 
-var app = require('./support/app');
 var Module = require('../index')();
 
 describe('Module runs parsers', function() {
@@ -28,7 +27,7 @@ describe('Module runs parsers', function() {
 
     response = httpMocks.createResponse();
 
-    Module(request, response);
+    Module(request, response, function(req, res, next) {});
     done();
   });
 
