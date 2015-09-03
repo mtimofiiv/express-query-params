@@ -1,7 +1,7 @@
 {
-  "name": "mongo-express-query-params",
-  "version": "0.1.0",
-  "description": "Express.js middleware implementing the API Query Spec, converting the query to something Mongo can lookup.",
+  "name": "express-query-params",
+  "version": "0.1.1",
+  "description": "Express.js middleware implementing the API Query Spec, converting the params to SQL or a Mongo query",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -12,7 +12,10 @@
   },
   "keywords": [
     "express",
-    "express.js",
+    "express",
+    "mongo",
+    "mongoose",
+    "sql",
     "query",
     "parameters",
     "search"
