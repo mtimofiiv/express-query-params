@@ -5,7 +5,7 @@ Express.js middleware implementing the [API Query Spec](http://mgmco.github.io/a
 ## Installing
 
 ```
-npm i mongo-express-query-params
+npm i --save mongo-express-query-params
 ```
 
 ## Basic Usage
