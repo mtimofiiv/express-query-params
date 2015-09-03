@@ -1,11 +1,11 @@
 # Mongo Express Query Params
 
-Express.js middleware implementing the [API Query Spec](http://mgmco.github.io/api-query-spec/), converting the query to something Mongo can lookup.
+Express.js middleware implementing the [API Query Spec](http://mgmco.github.io/api-query-spec/), converting the query to something that can be used to look up the resource.
 
 ## Installing
 
 ```
-npm i --save mongo-express-query-params
+npm i --save express-query-params
 ```
 
 ## Basic Usage
@@ -14,7 +14,7 @@ This middleware can just be plugged into your stack like so:
 
 ```js
 var express = require('express');
-var queryParams = require('mongo-express-query-params');
+var queryParams = require('express-query-params');
 
 var app = express();
 
@@ -38,9 +38,20 @@ app.use(queryParams({
   parseDate: function() {},
 
   // Set this to false to disable type casting and have the output be all strings
-  typeCast: true
+  typeCast: true,
+
+  // Accepts `mongodb` or `sql` - defaults to `mongodb`
+  format: 'mongodb'
 }));
 ```
+
+## Formats
+
+So far, this middleware supports `mongodb` and `sql` as output formats.
+
+In case of `mongodb`, the output is a javascript object that can be used to query MongoDb.
+
+In case of `sql`, it will output a `WHERE` clause for you as a string.
 
 ## Tests
 
