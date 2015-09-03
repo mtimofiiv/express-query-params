@@ -1,0 +1,35 @@
+{
+  "name": "mongo-express-query-params",
+  "version": "0.0.1",
+  "description": "Express.js middleware implementing the API Query Spec, converting the query to something Mongo can lookup.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mtimofiiv/express-query-params.git"
+  },
+  "keywords": [
+    "express",
+    "express.js",
+    "query",
+    "parameters",
+    "search"
+  ],
+  "author": "Mike Timofiiv (http://fiiv.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mtimofiiv/express-query-params/issues"
+  },
+  "homepage": "https://github.com/mtimofiiv/express-query-params#readme",
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "express": "^4.13.3",
+    "mocha": "^2.3.0",
+    "node-mocks-http": "^1.4.3"
+  },
+  "dependencies": {
+    "moment": "^2.10.6"
+  }
+}
