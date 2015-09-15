@@ -16,7 +16,9 @@ var sampleRequest = {
     createdAt: '>2014-01-01',
     updatedAt: '<2015-01-01',
     friends: '>=5',
-    followers: '<=10'
+    followers: '<=10',
+    banned: 'false',
+    activated: 'true'
   }
 };
 
@@ -115,6 +117,11 @@ describe('Module outputs a properly parsed Mongo query', function() {
 
   it('parses lesser than or equal to', function() {
     expect(request.parsedQuery.followers).to.have.property('$lte', 10);
+  });
+
+  it('parses booleans properly', function() {
+    expect(request.parsedQuery.activated).to.equal(true);
+    expect(request.parsedQuery.banned).to.equal(false);
   });
 
 });
