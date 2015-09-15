@@ -1,6 +1,6 @@
 {
   "name": "express-query-params",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Express.js middleware implementing the API Query Spec, converting the params to SQL or a Mongo query",
   "main": "index.js",
   "scripts": {
