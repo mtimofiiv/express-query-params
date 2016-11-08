@@ -1,10 +1,11 @@
 {
   "name": "express-query-params",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Express.js middleware implementing the API Query Spec, converting the params to SQL or a Mongo query",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "package:update": "npm outdated --depth=0 | grep -v Package | awk '{print $1}' | xargs -I% npm install %@latest --save"
   },
   "repository": {
     "type": "git",
