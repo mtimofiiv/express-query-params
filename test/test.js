@@ -18,7 +18,8 @@ var sampleRequest = {
     friends: '>=5',
     followers: '<=10',
     banned: 'false',
-    activated: 'true'
+    activated: 'true',
+    firstName: '^Steve'
   }
 };
 
@@ -68,6 +69,10 @@ describe('Module outputs properly parsed SQL', function() {
 
   it('parses lesser than or equal to', function() {
     expect(request.parsedQuery).to.contain('followers <= 10');
+  });
+
+  it('parses a case-insensitive query properly', function() {
+    expect(request.parsedQuery).to.contain('firstName ILIKE `Steve`');
   });
 });
 
@@ -122,6 +127,11 @@ describe('Module outputs a properly parsed Mongo query', function() {
   it('parses booleans properly', function() {
     expect(request.parsedQuery.activated).to.equal(true);
     expect(request.parsedQuery.banned).to.equal(false);
+  });
+
+  it('parses a case-insensitive query properly', function() {
+    expect(request.parsedQuery.firstName).to.be.instanceof(RegExp)
+    expect(request.parsedQuery.firstName.toString()).to.equal((/^Steve$/i).toString());
   });
 
 });
