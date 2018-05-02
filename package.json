@@ -37,6 +37,6 @@
     "express": "^4.16.3"
   },
   "engines": {
-    "node": ">8"
+    "node": ">7"
   }
 }
