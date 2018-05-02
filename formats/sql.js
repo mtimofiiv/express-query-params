@@ -23,15 +23,14 @@ module.exports = (options = {}) => (
       ) continue
 
       const value = rawQuery[key]
+      let insertValue = cast(trimOperators(value))
 
       if (format.isRange(value)) {
-        const [ from, to ] = value.split('...')
+        const [ from, to ] = insertValue.split('...')
+        const clause = `${key} >= $${values.length + 1} AND ${key} <= $${values.length + 2}`
 
         values.push(cast(from), cast(to))
-        clauses.push(
-          `${key} >= $${values.length - 1}`,
-          `${key} <= $${values.length}`
-        )
+        clauses.push(format.negated(value) ? `NOT (${clause})` : clause)
 
         continue
       }
@@ -47,7 +46,6 @@ module.exports = (options = {}) => (
       }
 
       let clause = ''
-      let insertValue = cast(trimOperators(value))
       const index = values.length + 1
 
       if (format.stringContains(value)) {
@@ -60,7 +58,7 @@ module.exports = (options = {}) => (
       else if (format.isLesserThanOrEqual(value)) clause = `${key} <= $${index}`
       else clause = `${key} = $${index}`
 
-      clauses.push(clause)
+      clauses.push(format.negated(value) ? `NOT ${clause}` : clause)
       values.push(insertValue)
     }
 

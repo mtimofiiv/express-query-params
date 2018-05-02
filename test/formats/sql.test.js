@@ -21,10 +21,31 @@ const correctValues = [
   25.22,
   'red',
   'green',
-  'blue'
+  'blue',
+  'bald',
+  30000,
+  50000
 ]
 
-const correctQuery = 'username = $1 AND email LIKE $2 AND age >= $3 AND age <= $4 AND boughtSomethingOn >= $5 AND boughtSomethingOn <= $6 AND createdAt > $7 AND updatedAt < $8 AND friends >= $9 AND followers <= $10 AND banned = $11 AND activated = $12 AND firstName ILIKE $13 AND accountBalance = $14 AND favouriteColours IN ($15, $16, $17)'
+const correctQuery = [
+  'username = $1',
+  'email LIKE $2',
+  'age >= $3',
+  'age <= $4',
+  'boughtSomethingOn >= $5',
+  'boughtSomethingOn <= $6',
+  'createdAt > $7',
+  'updatedAt < $8',
+  'friends >= $9',
+  'followers <= $10',
+  'banned = $11',
+  'activated = $12',
+  'firstName ILIKE $13',
+  'accountBalance = $14',
+  'favouriteColours IN ($15, $16, $17)',
+  'NOT hairStyle = $18',
+  'NOT (income >= $19 AND income <= $20)'
+].join(' AND ')
 
 test('req.query -> SQL', () => {
   const { query, values } = sqlParser(DEFAULT_OPTIONS)(getQuery)

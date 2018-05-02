@@ -18,7 +18,7 @@ test('stringIsCaseInsensitive', () => {
 
 test('isRange', () => {
   for (const param in query) {
-    const isCorrect = [ 'boughtSomethingOn', 'age' ].indexOf(param) > -1
+    const isCorrect = [ 'boughtSomethingOn', 'age', 'income' ].indexOf(param) > -1
     expect(format.isRange(query[param])).toBe(isCorrect)
   }
 })
@@ -50,5 +50,11 @@ test('isLesserThanOrEqual', () => {
 test('oneOf', () => {
   for (const param in query) {
     expect(format.oneOf(query[param])).toBe(param === 'favouriteColours')
+  }
+})
+
+test('negated', () => {
+  for (const param in query) {
+    expect(format.negated(query[param])).toBe([ 'hairStyle', 'income' ].indexOf(param) > -1)
   }
 })

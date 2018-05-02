@@ -1,6 +1,6 @@
 module.exports = {
   username: 'steve',
-  email: '*@gmail.com*',
+  email: '*@gmail.com',
   age: '18...25',
   boughtSomethingOn: '2014-07-01...2014-09-01',
   createdAt: '>2014-01-01',
@@ -12,5 +12,7 @@ module.exports = {
   firstName: '^Steve',
   accountBalance: '25.22',
   favouriteColours: 'red,green,blue',
+  hairStyle: '!bald',
+  income: '!30000...!50000',
   limit: 10
 }
