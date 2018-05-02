@@ -2,7 +2,6 @@
 
 const mongoParser = require('../../formats/mongo')
 const getQuery = require('../query')
-const { DEFAULT_OPTIONS } = require('../../lib')
 
 const correctQuery = {
   username: 'steve',
@@ -34,6 +33,6 @@ const correctQuery = {
 }
 
 test('req.query -> Mongo', () => {
-  const parsedQuery = mongoParser(DEFAULT_OPTIONS)(getQuery)
+  const parsedQuery = mongoParser({ blacklistParams: [ 'limit' ] })(getQuery)
   expect(parsedQuery).toEqual(correctQuery)
 })

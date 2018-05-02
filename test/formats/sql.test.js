@@ -2,7 +2,6 @@
 
 const sqlParser = require('../../formats/sql')
 const getQuery = require('../query')
-const { DEFAULT_OPTIONS } = require('../../lib')
 
 const correctValues = [
   'steve',
@@ -48,7 +47,7 @@ const correctQuery = [
 ].join(' AND ')
 
 test('req.query -> SQL', () => {
-  const { query, values } = sqlParser(DEFAULT_OPTIONS)(getQuery)
+  const { query, values } = sqlParser({ blacklistParams: [ 'limit' ] })(getQuery)
 
   expect(query).toBe(correctQuery)
   for (const value of values) expect(correctValues).toContain(value)

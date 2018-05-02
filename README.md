@@ -52,7 +52,9 @@ app.use(queryParams({
   */
   returnJSDate: false|true,
 
-  // Accepts `mongo` or `sql` - defaults to `mongo`
+  /*
+    Accepts `mongo`, `sql` or `sequelize` - defaults to `mongo`
+  */
   format: 'mongo',
 
   /*
@@ -79,12 +81,13 @@ app.use(queryParams({
 
 ## Formats
 
-So far, this middleware supports `mongodb` and `sql` as output formats.
+So far, this middleware supports `mongodb`, `sql` and `sequelize` as output formats.
 
- * In case of `mongodb`, the output is a javascript object that can be used to query MongoDb.
- * In case of `sql`, it will output an object with the following props:
+ * `mongodb` the output is a javascript object that can be used to query MongoDb.
+ * `sql` it will output an object with the following props:
    * `query` - this contains a tokenised query (ie. `$1` replaces raw params)
    * `values` - this is an array of typecast values you can use in your query runner to coincide with the `query` prop
+ * `sequelize` outputs an object usable as a where clause in a Sequelize lookup
 
 ## A Note About v1
 
