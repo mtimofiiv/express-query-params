@@ -1,1 +1,1 @@
-module.exports = require('./lib/params');
+module.exports = require('./lib').middleware

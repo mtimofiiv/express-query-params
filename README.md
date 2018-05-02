@@ -1,11 +1,14 @@
-# Mongo Express Query Params
+# Express Query Params
 
 Express.js middleware implementing the [API Query Spec](http://mgmco.github.io/api-query-spec/), converting the query to something that can be used to look up the resource.
+
+It works for MongoDB and SQL.
 
 ## Installing
 
 ```
 npm i --save express-query-params
+yarn add express-query-params
 ```
 
 ## Basic Usage
@@ -13,15 +16,15 @@ npm i --save express-query-params
 This middleware can just be plugged into your stack like so:
 
 ```js
-var express = require('express');
-var queryParams = require('express-query-params');
+const express = require('express')
+const queryParams = require('express-query-params')
 
-var app = express();
+const app = express()
 
-app.use(queryParams());
+app.use(queryParams())
 ```
 
-Inside any downstream middleware, this plugin will create a `parsedQuery` object on the `request`. See the [test](https://github.com/mtimofiiv/express-query-params/blob/master/test/test.js) to see how it works.
+Inside any downstream middleware, this plugin will create a `parsedQuery` prop on `request`, so you should be able to access it via `request.parsedQuery`.
 
 ## Advanced Usage
 
@@ -30,20 +33,36 @@ The middleware accepts a few options to make your life easier:
 ```js
 app.use(queryParams({
 
-  // Function to parse integers or floats - defaults to javascript's own parseFloat
-  parseNum: parseFloat,
+  /*
+    Will validate dates according to this format - defaults to ISO8601
 
-  // Will validate dates according to this format - defaults to ISO_8601
-  dateFormat: '2014-01-01',
-
-  // Function to parse dates to the `dateFormat` variable - defaults to Moment.js
-  parseDate: function() {},
-
-  // Set this to false to disable type casting and have the output be all strings
-  typeCast: true,
+    If you want to custom-format your dates, please pass a function here. Its first
+    argument would be the raw date and it would expect the formatted date as a return.
+  */
+  dateFormat: 'ISO8601',
 
   // Accepts `mongodb` or `sql` - defaults to `mongodb`
-  format: 'mongodb'
+  format: 'mongodb',
+
+  /*
+    Use this to prevent certain params from becoming clauses. Useful for things like
+    pagination params. Default is `limit`.
+
+    Add their key to this array.
+
+    Is compatible with the whitelistParams (but can't really imagine why you'd want to!)
+  */
+  blacklistParams: [ 'limit' ],
+
+  /*
+    Use this to only allow certain params becoming clauses. Useful for limiting access in
+    your API's search functionality.
+
+    Add their key to this array.
+
+    Is compatible with the blacklistParams (but can't really imagine why you'd want to!)
+  */
+  whitelistParams: []
 }));
 ```
 
@@ -51,12 +70,24 @@ app.use(queryParams({
 
 So far, this middleware supports `mongodb` and `sql` as output formats.
 
-In case of `mongodb`, the output is a javascript object that can be used to query MongoDb.
+ * In case of `mongodb`, the output is a javascript object that can be used to query MongoDb.
+ * In case of `sql`, it will output an object with the following props:
+   * `query` - this contains a tokenised query (ie. `$1` replaces raw params)
+   * `values` - this is an array of typecast values you can use in your query runner to coincide with the `query` prop
 
-In case of `sql`, it will output a `WHERE` clause for you as a string.
+## A Note About v1
+
+This module has endured a complete re-write from version `0.4.0` to `1.0.0`. Their APIs are only partially compatible now, so please ensure you read the following differences before upgrading:
+
+ * The SQL format now returns an object with a tokenised query and an array of corresponding values, and before it used to return a complete query. This was done because it is out of scope of this module to protect your application from SQL injection, and this is a real conern with a raw query. You can plug these props right into something like Sequelize to make them work! That has built in parameter sanitisation.
+ *
+
+## Contributing
+
+Do you have a database that is not SQL or Mongo? Would love to have your contribution in the form of a PR! Please include a test.
 
 ## Tests
 
 ```
-mocha
+yarn test
 ```
