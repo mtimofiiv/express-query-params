@@ -11,5 +11,6 @@ module.exports = {
   activated: 'true',
   firstName: '^Steve',
   accountBalance: '25.22',
+  favouriteColours: 'red,green,blue',
   limit: 10
 }

@@ -46,3 +46,9 @@ test('isLesserThanOrEqual', () => {
     expect(format.isLesserThanOrEqual(query[param])).toBe(param === 'followers')
   }
 })
+
+test('oneOf', () => {
+  for (const param in query) {
+    expect(format.oneOf(query[param])).toBe(param === 'favouriteColours')
+  }
+})

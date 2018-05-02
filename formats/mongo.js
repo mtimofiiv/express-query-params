@@ -30,6 +30,7 @@ module.exports = (options = {}) => (
       else if (format.isGreaterThanOrEqual(value)) mongo[key] = { $gte: insertValue }
       else if (format.isLesserThan(value)) mongo[key] = { $lt: insertValue }
       else if (format.isLesserThanOrEqual(value)) mongo[key] = { $lte: insertValue }
+      else if (format.oneOf(value)) mongo[key] = { $in: value.split(',') }
       else if (format.isRange(value)) {
         const [ from, to ] = value.split('...')
         mongo[key] = { $lte: cast(from), $gte: cast(to) }

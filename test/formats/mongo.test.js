@@ -22,7 +22,8 @@ const correctQuery = {
   banned: false,
   activated: true,
   firstName: /Steve$i/,
-  accountBalance: 25.22
+  accountBalance: 25.22,
+  favouriteColours: { $in: [ 'red', 'green', 'blue' ] }
 }
 
 test('req.query -> Mongo', () => {

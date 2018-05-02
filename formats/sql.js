@@ -36,6 +36,16 @@ module.exports = (options = {}) => (
         continue
       }
 
+      if (format.oneOf(value)) {
+        const oneOf = value.split(',').map(v => cast(v))
+        const inArguments = oneOf.map((_, i) => `$${values.length + i + 1}`).join(', ')
+
+        values.push(...oneOf)
+        clauses.push(`${key} IN (${inArguments})`)
+
+        continue
+      }
+
       let clause = ''
       let insertValue = cast(trimOperators(value))
       const index = values.length + 1
