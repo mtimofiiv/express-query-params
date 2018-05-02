@@ -6,9 +6,9 @@ It works for MongoDB and SQL.
 
 ## Installing
 
-```
-npm i --save express-query-params
-yarn add express-query-params
+```sh
+npm i --save express-query-params # with npm
+yarn add express-query-params     # with yarn
 ```
 
 ## Basic Usage
@@ -41,8 +41,19 @@ app.use(queryParams({
   */
   dateFormat: 'ISO8601',
 
-  // Accepts `mongodb` or `sql` - defaults to `mongodb`
-  format: 'mongodb',
+  /*
+    Here you can overwrite the default behaviour of how dates are handled. If this is
+    set to true, it will give you back a JS Date object. If you set it to false, you will
+    merely get the string you put in.
+
+    A caveat - if you set `dateFormat` to a custom function, this option will have no effect.
+
+    For SQL, this defaults to false and for Mongo the default is true
+  */
+  returnJSDate: false|true,
+
+  // Accepts `mongo` or `sql` - defaults to `mongo`
+  format: 'mongo',
 
   /*
     Use this to prevent certain params from becoming clauses. Useful for things like
@@ -80,7 +91,8 @@ So far, this middleware supports `mongodb` and `sql` as output formats.
 This module has endured a complete re-write from version `0.4.0` to `1.0.0`. Their APIs are only partially compatible now, so please ensure you read the following differences before upgrading:
 
  * The SQL format now returns an object with a tokenised query and an array of corresponding values, and before it used to return a complete query. This was done because it is out of scope of this module to protect your application from SQL injection, and this is a real conern with a raw query. You can plug these props right into something like Sequelize to make them work! That has built in parameter sanitisation.
- *
+ * The `dateFormat` option now works differently, please read about it above if you need it to do something besides default.
+ * `moment` is no longer required for this module, it uses only native JS date.
 
 ## Contributing
 

@@ -4,7 +4,7 @@ const { trimOperators, typeCast } = require('../lib/utils')
 module.exports = (options = {}) => (
   rawQuery => {
     const mongo = {}
-    const cast = (options.typeCast || typeCast)({ ...options, returnJSDate: true })
+    const cast = (options.typeCast || typeCast)({ returnJSDate: true, ...options })
 
     for (const key in rawQuery) {
       if (!Object.prototype.hasOwnProperty.call(rawQuery, key)) continue
