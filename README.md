@@ -104,5 +104,5 @@ Do you have a database that is not SQL or Mongo? Would love to have your contrib
 ## Tests
 
 ```
-yarn test
+npm run test
 ```

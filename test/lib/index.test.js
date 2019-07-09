@@ -1,22 +1,22 @@
-/* global test expect */
+const assert = require('assert')
 
 const { middleware } = require('../../lib')
 const query = require('../query')
 
-test('Application middleware', () => {
+module.exports = () => {
   const instance = middleware()
   const request = { query }
   const emptyRequest = {}
 
-  expect(instance).toBeInstanceOf(Function)
+  assert(instance instanceof Function)
 
   instance(emptyRequest, {}, () => {
-    expect(emptyRequest.query).toBeUndefined()
-    expect(emptyRequest.parsedQuery).toBeUndefined()
+    assert.deepStrictEqual(emptyRequest.query, undefined)
+    assert.deepStrictEqual(emptyRequest.parsedQuery, undefined)
   })
 
   instance(request, {}, () => {
-    expect(request.query).toBeDefined()
-    expect(request.parsedQuery).toBeDefined()
+    assert(request.query)
+    assert(request.parsedQuery)
   })
-})
+}

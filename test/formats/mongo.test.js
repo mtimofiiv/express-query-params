@@ -1,4 +1,4 @@
-/* global test expect */
+const assert = require('assert')
 
 const mongoParser = require('../../formats/mongo')
 const getQuery = require('../query')
@@ -32,7 +32,7 @@ const correctQuery = {
   }
 }
 
-test('req.query -> Mongo', () => {
+module.exports = () => {
   const parsedQuery = mongoParser({ blacklistParams: [ 'limit' ] })(getQuery)
-  expect(parsedQuery).toEqual(correctQuery)
-})
+  assert.deepStrictEqual(parsedQuery, correctQuery)
+}

@@ -1,4 +1,4 @@
-/* global test expect */
+const assert = require('assert')
 
 const sqlParser = require('../../formats/sql')
 const getQuery = require('../query')
@@ -46,9 +46,9 @@ const correctQuery = [
   'NOT (income >= $19 AND income <= $20)'
 ].join(' AND ')
 
-test('req.query -> SQL', () => {
+module.exports = () => {
   const { query, values } = sqlParser({ blacklistParams: [ 'limit' ] })(getQuery)
 
-  expect(query).toBe(correctQuery)
-  for (const value of values) expect(correctValues).toContain(value)
-})
+  assert.equal(query, correctQuery)
+  assert.deepStrictEqual(values, correctValues)
+}

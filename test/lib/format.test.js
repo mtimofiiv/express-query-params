@@ -1,60 +1,52 @@
-/* global test expect */
-/* eslint guard-for-in: [off], curly: [off] */
+const assert = require('assert')
 
 const format = require('../../lib/format')
 const query = require('../query')
 
-test('stringContains', () => {
-  for (const param in query) {
-    expect(format.stringContains(query[param])).toBe(param === 'email')
-  }
-})
+module.exports = () => {
+  // stringContains
+  for (const param of Object.keys(query)) (
+    assert.deepStrictEqual(format.stringContains(query[param]), param === 'email')
+  )
 
-test('stringIsCaseInsensitive', () => {
-  for (const param in query) {
-    expect(format.stringIsCaseInsensitive(query[param])).toBe(param === 'firstName')
-  }
-})
+  // stringIsCaseInsensitive
+  for (const param of Object.keys(query)) (
+    assert.deepStrictEqual(format.stringIsCaseInsensitive(query[param]), param === 'firstName')
+  )
 
-test('isRange', () => {
-  for (const param in query) {
+  // isRange
+  for (const param of Object.keys(query)) {
     const isCorrect = [ 'boughtSomethingOn', 'age', 'income' ].indexOf(param) > -1
-    expect(format.isRange(query[param])).toBe(isCorrect)
+    assert.deepStrictEqual(format.isRange(query[param]), isCorrect)
   }
-})
 
-test('isGreaterThan', () => {
-  for (const param in query) {
-    expect(format.isGreaterThan(query[param])).toBe(param === 'createdAt')
-  }
-})
+  // isGreaterThan
+  for (const param of Object.keys(query)) (
+    assert.deepStrictEqual(format.isGreaterThan(query[param]), param === 'createdAt')
+  )
 
-test('isGreaterThanOrEqual', () => {
-  for (const param in query) {
-    expect(format.isGreaterThanOrEqual(query[param])).toBe(param === 'friends')
-  }
-})
+  // isGreaterThanOrEqual
+  for (const param of Object.keys(query)) (
+    assert.deepStrictEqual(format.isGreaterThanOrEqual(query[param]), param === 'friends')
+  )
 
-test('isLesserThan', () => {
-  for (const param in query) {
-    expect(format.isLesserThan(query[param])).toBe(param === 'updatedAt')
-  }
-})
+  // isLesserThan
+  for (const param of Object.keys(query)) (
+    assert.deepStrictEqual(format.isLesserThan(query[param]), param === 'updatedAt')
+  )
 
-test('isLesserThanOrEqual', () => {
-  for (const param in query) {
-    expect(format.isLesserThanOrEqual(query[param])).toBe(param === 'followers')
-  }
-})
+  // isLesserThanOrEqual
+  for (const param of Object.keys(query)) (
+    assert.deepStrictEqual(format.isLesserThanOrEqual(query[param]), param === 'followers')
+  )
 
-test('oneOf', () => {
-  for (const param in query) {
-    expect(format.oneOf(query[param])).toBe(param === 'favouriteColours')
-  }
-})
+  // oneOf
+  for (const param of Object.keys(query)) (
+    assert.deepStrictEqual(format.oneOf(query[param]), param === 'favouriteColours')
+  )
 
-test('negated', () => {
-  for (const param in query) {
-    expect(format.negated(query[param])).toBe([ 'hairStyle', 'income' ].indexOf(param) > -1)
-  }
-})
+  // negated
+  for (const param of Object.keys(query)) (
+    assert.deepStrictEqual(format.negated(query[param]), [ 'hairStyle', 'income' ].indexOf(param) > -1)
+  )
+}

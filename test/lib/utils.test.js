@@ -1,28 +1,27 @@
-/* global test expect */
+const assert = require('assert')
 
 const { typeCast, trimOperators } = require('../../lib/utils')
 
 const date = '2018-05-02T09:52:52.623Z'
 
-test('typeCast()', () => {
-  expect(typeCast()(42)).toBe(42)
-  expect(typeCast()('42')).toBe(42)
-  expect(typeCast()('true')).toBe(true)
-  expect(typeCast()('false')).toBe(false)
-  expect(typeCast()(date)).toBe(date)
-  expect(typeCast()({})).toBeInstanceOf(Object)
-  expect(typeCast()([])).toBeInstanceOf(Array)
+module.exports = () => {
+  assert.deepEqual(typeCast()(42), 42)
+  assert.deepEqual(typeCast()('42'), 42)
+  assert.deepEqual(typeCast()('true'), true)
+  assert.deepEqual(typeCast()('false'), false)
+  assert.deepEqual(typeCast()(date), date)
 
-  expect(typeCast({ returnJSDate: true })(date)).toBeInstanceOf(Date)
-  expect(typeCast({ dateFormat: d => `wut${d}` })(date)).toBe(`wut${date}`)
-})
+  assert(typeCast()({}) instanceof Object)
+  assert(typeCast()([]) instanceof Array)
 
-test('trimOperators()', () => {
-  expect(trimOperators('*butts')).toBe('butts')
-  expect(trimOperators('^butts')).toBe('butts')
-  expect(trimOperators('>=butts')).toBe('butts')
-  expect(trimOperators('>butts')).toBe('butts')
-  expect(trimOperators('<butts')).toBe('butts')
-  expect(trimOperators('<=butts')).toBe('butts')
-  expect(trimOperators('butts')).toBe('butts')
-})
+  assert(typeCast({ returnJSDate: true })(date) instanceof Date)
+  assert.deepEqual(typeCast({ dateFormat: d => `wut${d}` })(date), `wut${date}`)
+
+  assert.deepEqual(trimOperators('*butts'), 'butts')
+  assert.deepEqual(trimOperators('^butts'), 'butts')
+  assert.deepEqual(trimOperators('>=butts'), 'butts')
+  assert.deepEqual(trimOperators('>butts'), 'butts')
+  assert.deepEqual(trimOperators('<butts'), 'butts')
+  assert.deepEqual(trimOperators('<=butts'), 'butts')
+  assert.deepEqual(trimOperators('butts'), 'butts')
+}

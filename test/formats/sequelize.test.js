@@ -1,4 +1,4 @@
-/* global test expect */
+const assert = require('assert')
 
 const sequelizeParser = require('../../formats/sequelize')
 const getQuery = require('../query')
@@ -33,12 +33,12 @@ const correctQuery = {
   }
 }
 
-test('req.query -> Sequelize', () => {
+module.exports = () => {
   const parsedQuery = sequelizeParser({
     format: 'sequelize',
     blacklistParams: [ 'limit' ],
     sequelizeOp
   })(getQuery)
 
-  expect(parsedQuery).toEqual(correctQuery)
-})
+  assert.deepStrictEqual(parsedQuery, correctQuery)
+}
